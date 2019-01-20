@@ -5,8 +5,9 @@ import os
 # local imports
 from app import create_app
 
-configName = os.getenv('APP_SETTINGS') 
+configName = os.getenv('APP_SETTINGS')
 app = create_app(configName)
+
 
 @app.route('/')
 def index():
