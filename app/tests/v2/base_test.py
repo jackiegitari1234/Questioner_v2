@@ -27,8 +27,8 @@ class BaseTest(unittest.TestCase):
             "firstname" : "jackie",
             "lastname" : "muthoni",
             "othername" : "gitari",
-            "email" : "jackie@gmail.com",
-            "phoneNumber" : "+254707802693",
+            "email" : "mary@gmail.com",
+            "phone_number" : "+254707802693",
             "username" : "jackie",
             "password" : "kajd23",
             "cpassword" : "kajd23"
@@ -38,11 +38,11 @@ class BaseTest(unittest.TestCase):
             "firstname" : "jackie",
             "lastname" : "muthoni",
             "othername" : "gitari",
-            "email" : "jackiegmail.com",
-            "phoneNumber" : "+254707802693",
+            "email" : "lukegmail.com",
+            "phone_number" : "+254707802693",
             "username" : "jackie",
-            "password" : "R@kajd23",
-            "cpassword" : "R@kajd23"
+            "password" : "R#kajd23",
+            "cpassword" : "R#kajd23"
         }
         self.user_4 = {
             "firstname" : "jackie",
@@ -58,8 +58,8 @@ class BaseTest(unittest.TestCase):
             "firstname" : "jackie",
             "lastname" : "muthoni",
             "othername" : "gitari",
-            "email" : "gitari@gmail.com",
-            "phoneNumber" : "+254707802693",
+            "email" : "michel@gmail.com",
+            "phone_number" : "+254707802693",
             "username" : "jackie",
             "password" : "R#kajd23",
             "cpassword" : "R#kajd23"
@@ -68,12 +68,11 @@ class BaseTest(unittest.TestCase):
             "firstname" : "jackie",
             "lastname" : "muthoni",
             "othername" : "gitari",
-            "email" : "gitari@gmail.com",
-            "phoneNumber" : "+254707802693",
+            "email" : "luke@gmail.com",
+            "phone_number" : "+254707802693",
             "username" : "jackie",
             "password" : "R#kajd23",
-            "cpassword" : "R#kajd23",
-            "owner" : "unknown"
+            "cpassword" : "R#kajd23"
         }
   
 
