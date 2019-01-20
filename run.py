@@ -5,8 +5,8 @@ import os
 # local imports
 from app import create_app
 
-configName = os.getenv('APP_SETTINGS')
-app = create_app(configName)
+config_name = os.getenv('APP_SETTINGS')
+app = create_app("development")
 
 
 @app.route('/')
