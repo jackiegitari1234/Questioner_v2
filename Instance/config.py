@@ -1,6 +1,7 @@
 import os
 '''configuration options'''
 
+
 class Config(object):
     '''Parent configuration class'''
     DEBUG = False
@@ -12,6 +13,7 @@ class Config(object):
 class DevelopmentConfig(Config):
     '''configurations for development environment'''
     DEBUG = True
+
 
 class TestingConfig(Config):
     '''configurations for test environment'''
