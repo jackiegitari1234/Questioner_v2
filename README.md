@@ -1,4 +1,6 @@
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/fa520a535e5047282886/maintainability)](https://codeclimate.com/github/jackiegitari1234/Questioner_v2/maintainability)
+
 # Questioner : challenge 3
 
 ## Endpoints
