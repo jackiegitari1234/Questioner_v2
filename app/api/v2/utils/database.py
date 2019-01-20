@@ -2,9 +2,13 @@ import psycopg2
 from Instance.config import app_config
 
 
-def init_db():
+def init_db(config_name=None):
     try:
-        conn = psycopg2.connect(database='postgres',user='postgres',
+        if config_name == "testing":
+            db='testingdb'
+        else:
+            db='postgres'
+        conn = psycopg2.connect(database=db,user='postgres',
         host='localhost',password='12345',port=5433)
         print('databases connected')
         conn.commit()
