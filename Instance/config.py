@@ -8,6 +8,7 @@ class Config(object):
     SECRET_KEY = 'tryandguess'
     ENV = 'development'
     SECRET = os.getenv('SECRET')
+    DATABASE_URL = os.getenv("DB_DEVELOPMENT_URL")
 
 
 class DevelopmentConfig(Config):
