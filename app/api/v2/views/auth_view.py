@@ -57,7 +57,7 @@ def register():
         return make_response(jsonify({"message": "user not registered",
                                         "status": 400}))
     else:
-        return make_response(jsonify({"message": "user sucessfully registered",
+        return make_response(jsonify({"message": "user successfully registered",
                                         "status": 201})), 201
 
     
