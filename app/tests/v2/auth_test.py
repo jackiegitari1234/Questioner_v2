@@ -5,8 +5,9 @@ import json
 # local imports
 from app import create_app
 from .base_test import BaseTest
+from app.api.v2.utils.database import init_db,drop_all_tables
 
-app = create_app("testing")
+# app = create_app("testing")
 
 class TestAuth(BaseTest):
 
@@ -47,4 +48,6 @@ class TestAuth(BaseTest):
         result = json.loads(response.data)
         self.assertEqual(result["message"],"user successfully registered")
         self.assertEqual(response.status_code, 201) #201 created
+        
+        drop_all_tables()
 

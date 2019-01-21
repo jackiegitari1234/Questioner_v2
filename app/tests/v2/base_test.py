@@ -1,22 +1,23 @@
 # global builtin modules
-import unittest
+import unittest,os
 
 # local imports
 from app import create_app
+from app.api.v2.utils.database import init_db, create_tables, drop_all_tables
 import Instance
+from Instance.config import app_config
 
-app = create_app("testing")
+app = create_app(config = "testing")
 
 class BaseTest(unittest.TestCase):
     '''test configurations'''
 
     def setUp(self):
-        self.app = create_app("testing")
-        self.app_context = self.app.app_context()
-
-        app.config.from_object(Instance.config.TestingConfig)
-        self.client = app.test_client()
-        
+        self.client = create_app(config="testing").test_client()
+        config = os.getenv("TESTING_ENV")
+        init_db()
+        print (config)
+        create_tables()
 
         #authentication
         self.user_1 = {
@@ -58,7 +59,7 @@ class BaseTest(unittest.TestCase):
             "firstname" : "jackie",
             "lastname" : "muthoni",
             "othername" : "gitari",
-            "email" : "michel@gmail.com",
+            "email" : "mee123l@gmail.com",
             "phone_number" : "+254707802693",
             "username" : "jackie",
             "password" : "R#kajd23",
@@ -77,3 +78,6 @@ class BaseTest(unittest.TestCase):
   
 
         return self.client
+    
+
+        
