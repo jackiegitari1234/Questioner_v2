@@ -10,7 +10,9 @@ from app.api.v2.utils.errorhandlers import page_not_found,server_error,invalid_m
 from app.api.v2.utils.database import init_db, create_tables
 
 
-def create_app(configName):
+
+def create_app(config):
+    
     app = Flask(__name__)
     app.config.from_object(app_config["development"])
     app.register_blueprint(V2_auth)
