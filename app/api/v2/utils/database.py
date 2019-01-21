@@ -1,16 +1,17 @@
-import psycopg2
+import psycopg2,os
 from Instance.config import app_config
 
 
-def init_db(config_name=None):
+config = os.getenv("FLASK_ENV")
+
+def init_db():
     try:
-        if config_name == "testing":
-            db='testingdb'
+        if config == "development":
+            db_url = os.getenv("DATABASE_URL")
         else:
-            db='postgres'
-        conn = psycopg2.connect(database=db,user='postgres',
-        host='localhost',password='12345',port=5433)
-        print('databases connected')
+            db_url="dbname='testingdb' host='127.0.0.1' port='5433' user='postgres' password='12345'"
+        conn = psycopg2.connect(db_url)
+        print('database connected')
         conn.commit()
         return conn
     except (Exception, psycopg2.Error) as error:
@@ -25,9 +26,9 @@ def create_tables():
         cursor = conn.cursor()
         query = ''' CREATE TABLE IF NOT EXISTS member (
             id serial PRIMARY KEY,
-            public_id VARCHAR (100),
-            firstname VARCHAR (30) NOT NULL,
-            lastname VARCHAR (30) NOT NULL,
+            public_id VARCHAR (50),
+            firstname VARCHAR (40) NOT NULL,
+            lastname VARCHAR (40) NOT NULL,
             othername VARCHAR (30) NOT NULL,
             username VARCHAR (30) NOT NULL,
             registered DATE NOT NULL,
@@ -45,4 +46,11 @@ def create_tables():
         print("successfully created")
     except (Exception, psycopg2.Error) as error:
         print("Unable to create tables", error)
+
+def drop_all_tables():
+    connec = init_db()
+    cursor = connec.cursor()
+    cursor.execute("DROP TABLE IF EXISTS member CASCADE")
+    connec.commit()
+    cursor.close()
 
