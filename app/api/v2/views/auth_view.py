@@ -52,10 +52,14 @@ def register():
 
     pwd = hash_password(password) #encrypt the password
     new_user = User(firstname, lastname, othername, username, email,phone_number, pwd)
-    new_user.register_user()
-
-    return make_response(jsonify({"message": "user successfully registered",
+    mb = new_user.register_user()
+    if mb == None:
+        return make_response(jsonify({"message": "user not registered",
+                                        "status": 400}))
+    else:
+        return make_response(jsonify({"message": "user sucessfully registered",
                                         "status": 201})), 201
+
     
     
     

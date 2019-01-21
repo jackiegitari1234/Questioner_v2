@@ -35,5 +35,6 @@ class User(object):
             cur = self.db.cursor()
             cur.execute(query, new_user)
             self.db.commit()
+            return new_user
         except (Exception, psycopg2.Error) as error:
             print(error)
