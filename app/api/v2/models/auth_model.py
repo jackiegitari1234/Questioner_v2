@@ -42,3 +42,13 @@ class User(object):
             return new_user
         except (Exception, psycopg2.Error) as error:
             print(error)
+
+    def login(email):
+        cur = init_db().cursor()
+        query = "SELECT email from member WHERE email = %s;"
+        cur.execute(query, (email))
+        user_data = cur.fetchone()
+        print("user", user_data)
+
+        if user_data:
+            return user_data
