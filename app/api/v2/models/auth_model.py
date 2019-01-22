@@ -2,6 +2,7 @@ from datetime import datetime
 import psycopg2
 from app.api.v2.utils.database import init_db
 
+
 class User(object):
 
     def __init__(self, *args):
@@ -21,7 +22,7 @@ class User(object):
             'lastname': self.lastname,
             'isAdmin': False,
             "username": self.username,
-            "phone_number" : self.phone_number,
+            "phone_number": self.phone_number,
             "othername": self.othername,
             'registered': datetime.now(),
             "email": self.email,
@@ -29,8 +30,12 @@ class User(object):
         }
         try:
             query = """
-                    INSERT INTO member(public_id, firstname, lastname, othername, PhoneNumber, isAdmin, registered, username, email, password) 
-                    VALUES (1, %(firstname)s, %(lastname)s, %(othername)s, %(phone_number)s, %(isAdmin)s,%(registered)s, %(username)s, %(email)s,%(password)s) ;
+                    INSERT INTO member(public_id, firstname, lastname,
+                    othername, PhoneNumber, isAdmin, registered, username,
+                    email, password) 
+                    VALUES (1, %(firstname)s, %(lastname)s, %(othername)s,
+                    %(phone_number)s, %(isAdmin)s,%(registered)s, %(username)s,
+                    %(email)s,%(password)s) ;
                     """
             cur = self.db.cursor()
             cur.execute(query, new_user)

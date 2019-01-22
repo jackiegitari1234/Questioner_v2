@@ -1,15 +1,18 @@
-import psycopg2,os
+import psycopg2
+import os
 from Instance.config import app_config
 
 
 config = os.getenv("FLASK_ENV")
+
 
 def init_db():
     try:
         if config == "development":
             db_url = os.getenv("DATABASE_URL")
         else:
-            db_url="dbname='testingdb' host='127.0.0.1' port='5433' user='postgres' password='12345'"
+            db_url = "dbname = 'testingdb' host = '127.0.0.1' port = '5433'
+            user = 'postgres' password = '12345'"
         conn = psycopg2.connect(db_url)
         print('database connected')
         conn.commit()
@@ -19,8 +22,7 @@ def init_db():
 
 
 def create_tables():
-    
-    
+
     try:
         conn = init_db()
         cursor = conn.cursor()
@@ -42,10 +44,11 @@ def create_tables():
         cursor.execute(query)
         conn.commit()
         cursor.close()
-        
+
         print("successfully created")
     except (Exception, psycopg2.Error) as error:
         print("Unable to create tables", error)
+
 
 def drop_all_tables():
     connec = init_db()
@@ -53,4 +56,3 @@ def drop_all_tables():
     cursor.execute("DROP TABLE IF EXISTS member CASCADE")
     connec.commit()
     cursor.close()
-
