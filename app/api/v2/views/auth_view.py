@@ -4,6 +4,10 @@ import os
 
 # downloaded modules
 from flask import jsonify, request, abort, make_response, json
+from flask_jwt_extended import (
+    JWTManager, jwt_required, create_access_token,
+    get_jwt_identity
+)
 
 # local imports
 from app.api.v2 import vers2 as v2
@@ -15,6 +19,8 @@ inputs_validate = inputs_validate()
 
 
 SECRET_KEY = os.getenv("SECRET")
+# app.config['JWT_SECRET_KEY'] = SECRET_KEY  # Change this!
+# jwt = JWTManager(app)
 
 
 # sign up endpoint
@@ -121,4 +127,6 @@ def login():
         abort(make_response(
             jsonify({"message": "Wrong Password"}), 400))
 
-    abort(make_response(jsonify({"message": "user logged in"}), 200))
+    # abort(make_response(jsonify({"message": "user logged in"}), 200))
+    access_token = create_access_token(identity=email)
+    return jsonify(access_token=access_token), 200
