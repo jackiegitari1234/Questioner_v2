@@ -1,5 +1,5 @@
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/fa520a535e5047282886/maintainability)](https://codeclimate.com/github/jackiegitari1234/Questioner_v2/maintainability)
+[![Maintainability](https://api.codeclimate.com/v1/badges/fa520a535e5047282886/maintainability)](https://codeclimate.com/github/jackiegitari1234/Questioner_v2/maintainability) [![Build Status](https://travis-ci.org/jackiegitari1234/Questioner_v2.svg?branch=develop)](https://travis-ci.org/jackiegitari1234/Questioner_v2)
 
 # Questioner : challenge 3
 
