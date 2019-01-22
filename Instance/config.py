@@ -1,17 +1,19 @@
 import os
 '''configuration options'''
 
+
 class Config(object):
     '''Parent configuration class'''
     DEBUG = False
-    SECRET_KEY = 'tryandguess'
     ENV = 'development'
     SECRET = os.getenv('SECRET')
+    DATABASE_URL = os.getenv("DB_DEVELOPMENT_URL")
 
 
 class DevelopmentConfig(Config):
     '''configurations for development environment'''
     DEBUG = True
+
 
 class TestingConfig(Config):
     '''configurations for test environment'''
