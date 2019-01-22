@@ -64,8 +64,9 @@ def register():
                     username, email, phone_number, pwd)
     mb = new_user.register_user()
     if mb is None:
-        return make_response(jsonify({"message": "user not registered",
-                                      "status": 400}))
+        return make_response(jsonify(
+            {"message": "Email had already registered",
+             "status": 400}))
     else:
         return make_response(jsonify({"message": "successfully registered",
                                       "status": 201}))
