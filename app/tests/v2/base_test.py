@@ -18,7 +18,6 @@ class BaseTest(unittest.TestCase):
         self.client = create_app(config="testing").test_client()
         config = os.getenv("TESTING_ENV")
         init_db()
-        print(config)
         create_tables()
 
         # authentication
@@ -61,7 +60,7 @@ class BaseTest(unittest.TestCase):
             "firstname": "jackie",
             "lastname": "muthoni",
             "othername": "gitari",
-            "email": "mee123l@gmail.com",
+            "email": "man@gmail.com",
             "phone_number": "+254707802693",
             "username": "jackie",
             "password": "R#kajd23",
@@ -79,3 +78,8 @@ class BaseTest(unittest.TestCase):
         }
 
         return self.client
+
+    def tearDown(self):
+        ''' Destroys the test client '''
+        print("Dropping tables")
+        drop_all_tables()

@@ -69,4 +69,4 @@ def register():
              "status": 400}))
     else:
         return make_response(jsonify({"message": "successfully registered",
-                                      "status": 201}))
+                                      "status": 201}), 201)

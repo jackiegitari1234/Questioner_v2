@@ -11,8 +11,7 @@ def init_db():
         if config == "development":
             db_url = os.getenv("DATABASE_URL")
         else:
-            db_url = os.getenv("TEST_DATABASE_URL")
-            
+            db_url = ("dbname='testingdb' host='127.0.0.1' port='5433' user='postgres' password='12345'")
         conn = psycopg2.connect(db_url)
         print('database connected')
         conn.commit()
@@ -51,8 +50,12 @@ def create_tables():
 
 
 def drop_all_tables():
+    config = "testingdb"
     connec = init_db()
+    print("config")
     cursor = connec.cursor()
     cursor.execute("DROP TABLE IF EXISTS member CASCADE")
+
     connec.commit()
     cursor.close()
+
