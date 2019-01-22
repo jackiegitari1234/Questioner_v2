@@ -17,7 +17,6 @@ class User(object):
 
     def register_user(self):
         new_user = {
-            # "public_id": str(uuid.uuid4()),
             'firstname': self.firstname,
             'lastname': self.lastname,
             'isAdmin': False,
