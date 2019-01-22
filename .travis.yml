@@ -13,7 +13,7 @@ before_script:
  - psql -c "CREATE DATABASE testingdb;"
  - coveralls
 script:
-  - pytest --cov=app/api
+  - pytest --cov=app
 after_success:
   - coveralls
 
