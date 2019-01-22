@@ -11,8 +11,8 @@ class User(object):
         self.othername = args[2]
         self.username = args[3]
         self.email = args[4]
-        self.phone_number = args[4]
-        self.password = args[5]
+        self.phone_number = args[5]
+        self.password = args[6]
         self.db = init_db()
 
     def register_user(self):
@@ -42,3 +42,4 @@ class User(object):
             return new_user
         except (Exception, psycopg2.Error) as error:
             print(error)
+ 

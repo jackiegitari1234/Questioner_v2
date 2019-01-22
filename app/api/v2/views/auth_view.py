@@ -9,6 +9,7 @@ from flask import jsonify, request, abort, make_response, json
 from app.api.v2 import vers2 as v2
 from app.api.v2.models.auth_model import User
 from app.api.v2.utils.validator import inputs_validate, hash_password
+from app.api.v2.utils.database import init_db
 
 inputs_validate = inputs_validate()
 
@@ -70,3 +71,54 @@ def register():
     else:
         return make_response(jsonify({"message": "successfully registered",
                                       "status": 201}), 201)
+
+# sign in endpoint
+
+
+@v2.route('/signin', methods=['POST'])
+def login():
+
+    data = request.get_json()
+    if not data:
+        abort(make_response(
+            jsonify({"message": "POST of type Application/JSON expected"}),
+            400))
+
+    # Check for empty inputs
+    if not all(field in data for field in ["email", "password"]):
+        abort(make_response(
+            jsonify({"message": "Email and Paswword are required"}), 400))
+
+    email = data['email']
+    password = data['password']
+
+    # validate email
+    if not inputs_validate.email_validation(email):
+        abort(make_response(
+            jsonify({"message": "Please enter a valid email"}), 400))
+
+    # check if email exists
+    cur = init_db().cursor()
+    query = "SELECT email from member WHERE email = %s;"
+    cur.execute(query, (data['email'],))
+    user_data = cur.fetchone()
+    cur.close()
+
+    if not user_data:
+        abort(make_response(jsonify({"message": "User not Found"}), 404))
+
+
+    # check if password exists
+    cur = init_db().cursor()
+    query = "SELECT password from member WHERE email = %s;"
+    cur.execute(query, (data['email'],))
+    user_data = cur.fetchone()
+    cur.close()
+
+    details = (user_data[0])
+    if not inputs_validate.check_password(details, data['password']):
+        print (inputs_validate.check_password(user_data, data['password']))
+        abort(make_response(
+            jsonify({"message": "Wrong Password"}), 400))
+
+    abort(make_response(jsonify({"message": "user logged in"}), 200))

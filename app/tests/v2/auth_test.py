@@ -67,5 +67,34 @@ class TestAuth(BaseTest):
         result = json.loads(response.data)
         self.assertEqual(result["message"], "successfully registered")
         self.assertEqual(response.status_code, 201)
-       
 
+    '''SIGN IN'''
+    # test json data
+    
+    def test_application_type(self):
+        response = self.client.post('api/v2/signin')
+        result = json.loads(response.data)
+        self.assertEqual(result["message"],
+                         "POST of type Application/JSON expected")
+        self.assertEqual(response.status_code, 400)
+    # Test empty fields
+
+    def test_empty_signin_fields(self):
+        response = self.client.post(
+            'api/v2/signin', data=json.dumps(self.user_9),
+            content_type="application/json")
+        result = json.loads(response.data)
+        self.assertEqual(result["message"],
+                         "Email and Paswword are required")
+        self.assertEqual(response.status_code, 400)
+    
+    # invalid email
+    def test_login_invalid_email(self):
+        response = self.client.post(
+            'api/v2/signin', data=json.dumps(self.user_5),
+            content_type="application/json")
+        result = json.loads(response.data)
+        self.assertEqual(result["message"], "Please enter a valid email")
+        self.assertEqual(response.status_code, 400)
+        
+   
