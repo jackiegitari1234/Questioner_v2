@@ -42,12 +42,5 @@ class TestAuth(BaseTest):
         self.assertEqual(result["message"],"Your email is not valid")
         self.assertEqual(response.status_code, 400)
 
-    #Test valid registration
-    def test_signup_valid_input(self):
-        response = self.client.post('api/v2/signup',data=json.dumps(self.new_user),content_type="application/json")
-        result = json.loads(response.data)
-        self.assertEqual(result["message"],"user successfully registered")
-        self.assertEqual(response.status_code, 201) #201 created
-        
-        drop_all_tables()
+   
 
