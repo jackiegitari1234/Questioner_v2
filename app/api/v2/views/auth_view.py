@@ -102,6 +102,7 @@ def login():
     query = "SELECT email,password from member WHERE email = %s;"
     cur.execute(query, (data['email'],))
     user_data = cur.fetchone()
+    cur.close()
 
     if not user_data:
         abort(make_response(jsonify({"message": "User not Found"}), 404))

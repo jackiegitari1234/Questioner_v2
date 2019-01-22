@@ -67,7 +67,6 @@ class TestAuth(BaseTest):
         result = json.loads(response.data)
         self.assertEqual(result["message"], "successfully registered")
         self.assertEqual(response.status_code, 201)
-        # print (yes)
 
     '''SIGN IN'''
     # test json data
@@ -78,16 +77,17 @@ class TestAuth(BaseTest):
         self.assertEqual(result["message"],
                          "POST of type Application/JSON expected")
         self.assertEqual(response.status_code, 400)
-
     # Test empty fields
+
     def test_empty_signin_fields(self):
         response = self.client.post(
             'api/v2/signin', data=json.dumps(self.user_9),
             content_type="application/json")
         result = json.loads(response.data)
-        self.assertEqual(result["message"], "Email and Paswword are required")
+        self.assertEqual(result["message"],
+                         "Email and Paswword are required")
         self.assertEqual(response.status_code, 400)
-
+    
     # invalid email
     def test_login_invalid_email(self):
         response = self.client.post(
@@ -96,35 +96,5 @@ class TestAuth(BaseTest):
         result = json.loads(response.data)
         self.assertEqual(result["message"], "Please enter a valid email")
         self.assertEqual(response.status_code, 400)
-
-    # Test wrong email
-    def test_login_wrong_email(self):
-        config = "testing"
-        init_db()
-        create_tables()
-        response = self.client.post(
-            'api/v2/signup', data=json.dumps(self.user_4),
-            content_type="application/json")
-            
-        config = "testing"
-        init_db()
-        create_tables()
-        response = self.client.post(
-            'api/v2/signin', data=json.dumps(self.user_6),
-            content_type="application/json")
-        result = json.loads(response.data)
-        self.assertEqual(result["message"], "User not Found")
-        self.assertEqual(response.status_code, 404)
-
-    # Test wrong password
-    def test_login_wrong_password(self):
-        response = self.client.post('api/v2/signup', data=json.dumps(
-                                    self.nw_user),
-                                    content_type="application/json")
-
-        response = self.client.post('api/v2/signin', data=json.dumps(
-                                    self.nw_user),
-                                    content_type="application/json")
-        result = json.loads(response.data)
-        self.assertEqual(response.status_code, 200)
-
+        
+   
