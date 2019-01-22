@@ -60,7 +60,7 @@ class BaseTest(unittest.TestCase):
             "firstname": "jackie",
             "lastname": "muthoni",
             "othername": "gitari",
-            "email": "man@gmail.com",
+            "email": "felix@gmail.com",
             "phone_number": "+254707802693",
             "username": "jackie",
             "password": "R#kajd23",
@@ -75,6 +75,25 @@ class BaseTest(unittest.TestCase):
             "username": "jackie",
             "password": "R#kajd23",
             "cpassword": "R#kajd23"
+        }
+        self.user_5 = {
+            "email": "wronggmail.com",
+            "password": "wrong"
+        }
+        self.user_6 = {
+            "email": "wrong@gmail.com",
+            "password": "wrong"
+        }
+        self.user_7 = {
+            "email": "jacklinem@gmail.com",
+            "password": "wrong"
+        }
+        self.user_8 = {
+            "email": "jackie@gmail.com",
+            "password": "R#kajd23"
+        }
+        self.user_9 = {
+            "email": "jackie@gmail.com",
         }
 
         return self.client
