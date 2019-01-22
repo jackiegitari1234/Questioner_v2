@@ -99,7 +99,7 @@ def login():
 
     # check if email exists
     cur = init_db().cursor()
-    query = "SELECT email,password from member WHERE email = %s;"
+    query = "SELECT email from member WHERE email = %s;"
     cur.execute(query, (data['email'],))
     user_data = cur.fetchone()
     cur.close()
@@ -107,4 +107,18 @@ def login():
     if not user_data:
         abort(make_response(jsonify({"message": "User not Found"}), 404))
 
-    abort(make_response(jsonify({"message": user_data}), 200))
+
+    # check if password exists
+    cur = init_db().cursor()
+    query = "SELECT password from member WHERE email = %s;"
+    cur.execute(query, (data['email'],))
+    user_data = cur.fetchone()
+    cur.close()
+
+    details = (user_data[0])
+    if not inputs_validate.check_password(details, data['password']):
+        print (inputs_validate.check_password(user_data, data['password']))
+        abort(make_response(
+            jsonify({"message": "Wrong Password"}), 400))
+
+    abort(make_response(jsonify({"message": "user logged in"}), 200))
