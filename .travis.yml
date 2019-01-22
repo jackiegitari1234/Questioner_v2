@@ -10,3 +10,4 @@ script:
   - pytest --cov=app/api
 after_success:
   - coveralls
+  
