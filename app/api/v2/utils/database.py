@@ -9,9 +9,9 @@ config = os.getenv("FLASK_ENV")
 def init_db():
     try:
         if config == "development":
-            db_url = "dbname='postgres' host='127.0.0.1' port='5432' user='postgres' password='12345'"
+            db_url = "dbname='postgres' host='127.0.0.1' port='5433' user='postgres' password='12345'"
         else:
-            db_url = "dbname='testingdb' host='127.0.0.1' port='5432' user='postgres' password='12345'"
+            db_url = "dbname='testingdb' host='127.0.0.1' port='5433' user='postgres' password='12345'"
         conn = psycopg2.connect(db_url)
         print('database connected')
         conn.commit()
@@ -26,7 +26,8 @@ def create_tables():
     try:
         conn = init_db()
         cursor = conn.cursor()
-        query = ''' CREATE TABLE IF NOT EXISTS member (
+        member = ''' 
+            CREATE TABLE IF NOT EXISTS member (
             id serial PRIMARY KEY,
             public_id VARCHAR (50),
             firstname VARCHAR (40) NOT NULL,
@@ -41,7 +42,20 @@ def create_tables():
                 
         );
         '''
-        cursor.execute(query)
+        
+        meetup = """
+            CREATE TABLE IF NOT EXISTS meetups(
+            id SERIAL PRIMARY KEY,
+            created_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+            topic VARCHAR (50) NOT NULL,
+            location VARCHAR (20) NOT NULL,
+            happeningOn VARCHAR (20) NOT NULL,
+            tags VARCHAR (20) NOT NULL
+        );
+        """
+        all_queries = [member, meetup]
+        for each_query in all_queries:
+            cursor.execute(each_query)
         conn.commit()
         conn.close()
         print("successfully created")

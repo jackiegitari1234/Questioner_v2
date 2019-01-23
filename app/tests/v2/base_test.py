@@ -95,10 +95,48 @@ class BaseTest(unittest.TestCase):
         self.user_9 = {
             "email": "jackie@gmail.com",
         }
+        # meetups
+
+        #meetups
+        self.meetup_1 ={
+            "topic" : "Programming"
+        }
+        self.meetup_2 ={
+            "id": "1",
+            "topic" : "Programming",
+            "location" : "Nairobi",
+            "happeningOn" : "20/05/2019",
+            "tags" : "['php','java']"
+        }
+        self.meetup_3 ={
+            "id": "1",
+            "topic" : "Programming",
+            "location" : "Nairobi",
+            "happeningOn" : "20/05/2019",
+            "tags" : "['php','java']",
+        }
+        self.meetup_4 ={
+            "id": "1",
+            "topic" : "coding",
+            "location" : "Nairobi",
+            "happeningOn" : "20/05/2019",
+            "tags" : "['php','java']"
+        }
+        self.rsvp_1 = {
+            "user" : "1"
+        }
+        self.rsvp_2 = {
+            "response" : "yes",
+            "user" : "1"
+        }
+        self.rsvp_3 = {
+            "response" : "yes",
+            "user" : "1",
+            "name" : "jackie"
+        }
 
         return self.client
 
     def tearDown(self):
-        ''' Destroys the test client '''
         print("Dropping tables")
         drop_all_tables()
