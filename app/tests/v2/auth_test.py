@@ -58,9 +58,9 @@ class TestAuth(BaseTest):
 
     # Test register with invalid email
     def test_signup_valid_details(self):
-        config = "testing"
-        init_db()
-        create_tables()
+        # config = "testing"
+        # init_db()
+        # create_tables()
         response = self.client.post(
             'api/v2/signup', data=json.dumps(self.new_user),
             content_type="application/json")
@@ -85,16 +85,16 @@ class TestAuth(BaseTest):
             content_type="application/json")
         result = json.loads(response.data)
         self.assertEqual(result["message"],
-                         "Email and Paswword are required")
+                         "Username and Paswword are required")
         self.assertEqual(response.status_code, 400)
     
-    # invalid email
+    # no username
     def test_login_invalid_email(self):
         response = self.client.post(
             'api/v2/signin', data=json.dumps(self.user_5),
             content_type="application/json")
         result = json.loads(response.data)
-        self.assertEqual(result["message"], "Please enter a valid email")
+        self.assertEqual(result["message"], "Username and Paswword are required")
         self.assertEqual(response.status_code, 400)
         
    
