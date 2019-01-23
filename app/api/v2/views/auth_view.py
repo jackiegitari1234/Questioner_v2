@@ -19,8 +19,6 @@ inputs_validate = inputs_validate()
 
 
 SECRET_KEY = os.getenv("SECRET")
-# app.config['JWT_SECRET_KEY'] = SECRET_KEY  # Change this!
-# jwt = JWTManager(app)
 
 
 # sign up endpoint
@@ -109,7 +107,6 @@ def login():
         abort(make_response(jsonify({"message": "User not Found"}), 404))
 
 
-    # check if password exists
     cur = init_db().cursor()
     query = "SELECT password from member WHERE username = %s;"
     cur.execute(query, (data['username'],))
@@ -123,6 +120,6 @@ def login():
         abort(make_response(
             jsonify({"message": "Wrong Password"}), 400))
 
-    # abort(make_response(jsonify({"message": "user logged in"}), 200))
     access_token = create_access_token(identity=username)
     return jsonify(access_token=access_token), 200
+  
