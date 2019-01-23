@@ -4,6 +4,10 @@ import os
 
 # downloaded modules
 from flask import jsonify, request, abort, make_response, json
+from flask_jwt_extended import (
+    JWTManager, jwt_required, create_access_token,
+    get_jwt_identity
+)
 
 # local imports
 from app.api.v2 import vers2 as v2
@@ -15,6 +19,8 @@ inputs_validate = inputs_validate()
 
 
 SECRET_KEY = os.getenv("SECRET")
+# app.config['JWT_SECRET_KEY'] = SECRET_KEY  # Change this!
+# jwt = JWTManager(app)
 
 
 # sign up endpoint
@@ -85,22 +91,17 @@ def login():
             400))
 
     # Check for empty inputs
-    if not all(field in data for field in ["email", "password"]):
+    if not all(field in data for field in ["username", "password"]):
         abort(make_response(
-            jsonify({"message": "Email and Paswword are required"}), 400))
+            jsonify({"message": "Username and Paswword are required"}), 400))
 
-    email = data['email']
+    username = data['username']
     password = data['password']
-
-    # validate email
-    if not inputs_validate.email_validation(email):
-        abort(make_response(
-            jsonify({"message": "Please enter a valid email"}), 400))
 
     # check if email exists
     cur = init_db().cursor()
-    query = "SELECT email from member WHERE email = %s;"
-    cur.execute(query, (data['email'],))
+    query = "SELECT email from member WHERE username = %s;"
+    cur.execute(query, (data['username'],))
     user_data = cur.fetchone()
     cur.close()
 
@@ -110,15 +111,18 @@ def login():
 
     # check if password exists
     cur = init_db().cursor()
-    query = "SELECT password from member WHERE email = %s;"
-    cur.execute(query, (data['email'],))
+    query = "SELECT password from member WHERE username = %s;"
+    cur.execute(query, (data['username'],))
     user_data = cur.fetchone()
     cur.close()
 
     details = (user_data[0])
+    print (details)
     if not inputs_validate.check_password(details, data['password']):
         print (inputs_validate.check_password(user_data, data['password']))
         abort(make_response(
             jsonify({"message": "Wrong Password"}), 400))
 
-    abort(make_response(jsonify({"message": "user logged in"}), 200))
+    # abort(make_response(jsonify({"message": "user logged in"}), 200))
+    access_token = create_access_token(identity=username)
+    return jsonify(access_token=access_token), 200
