@@ -39,6 +39,18 @@ def add_meetup():
         abort(make_response(jsonify({"data":new_meetup}),201))
     abort(make_response(jsonify({"message":"You are not authorised to add a meetup"}),403))
 
+@v2.route('/meetups/1', methods=['DELETE'])
+@jwt_required
+def delete_meetup():
+
+    current_user = get_jwt_identity()
+    member = check_admin(current_user)
+    if member:
+        print("is admin")
+
+
+    abort(make_response(jsonify({"message":"You are not authorised to add a meetup"}),403))
+
 
 
 
