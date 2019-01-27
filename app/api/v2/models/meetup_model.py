@@ -49,5 +49,34 @@ def check_admin(current_user):
         return False
     except (Exception, psycopg2.Error) as error:
         print(error)
+
+def check_meet(id):
+    try:
+        cur = init_db().cursor()
+        query = "SELECT * FROM meetups WHERE id= %s";
+        cur.execute(query, (id,))
+        all_meetups = cur.fetchone()
+        cur.close()
+
+        details = (all_meetups[0])
+        if details == None:
+            return False
+        return True
+    except (Exception, psycopg2.Error) as error:
+        print(error)
+
+
+def delete_meetup(id):
+    try:
+        db= init_db()
+        cur = db.cursor()
+        query = "DELETE FROM meetups WHERE id= %s ";
+        cur.execute(query, (id,))
+        db.commit()
+        return "deleted sucessfully"
+
+    except (Exception, psycopg2.Error) as error:
+        print(error)
+
     
  
