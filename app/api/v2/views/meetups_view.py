@@ -53,6 +53,8 @@ def delete_meetups(id):
         abort(make_response(jsonify({"message":"Meetup not found"}),400))
     abort(make_response(jsonify({"message":"You are not authorised to add a meetup"}),403))
 
-
+@v2.route('/meetups', methods=['GET'])
+def get_meetups:
+    retun ("all")
 
 
