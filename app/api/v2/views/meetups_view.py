@@ -3,7 +3,7 @@ from flask import jsonify,request,abort,make_response
 
 #local imports
 from app.api.v2 import vers2 as v2
-from app.api.v2.models.meetup_model import Meetup,check_admin,check_meet,delete_meetup,all_meetups
+from app.api.v2.models.meetup_model import Meetup,check_admin,check_meet,delete_meetup,all_meetups,check_meetup
 from app.api.v2.models.auth_model import User
 from flask_jwt_extended import (
     JWTManager, jwt_required, create_access_token,
@@ -56,5 +56,11 @@ def delete_meetups(id):
 @v2.route('/meetups', methods=['GET'])
 def get_meetups():
     abort(make_response(jsonify({"meetups":all_meetups()}),200))
+
+@v2.route('/meetups/<int:id>', methods=['GET'])
+def each_meetups(id):
+    if check_meetup(id) == False:
+        abort(make_response(jsonify({"meetup":"meetup not found"}),200))
+    abort(make_response(jsonify({"meetup":check_meetup(id)}),200))
 
 
