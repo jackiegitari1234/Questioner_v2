@@ -32,6 +32,35 @@ class Meetup(object):
         except (Exception, psycopg2.Error) as error:
             print(error)
 
+
+class Rsvp(object):
+
+    def __init__(self, *args):
+        self.meetup_id = args[0]
+        self.username = args[1]
+        self.response = args[2]
+        self.db = init_db()
+
+    def add_rsvp (self):
+        new_rsvp = {
+            'meetup_id': self.meetup_id,
+            'username': self.username,
+            "response": self.response,
+        }
+        try:
+            query = """
+                    INSERT INTO rsvp(meetup_id, username, response) 
+                    VALUES (%(meetup_id)s, %(username)s, %(response)s
+                    ) ;
+                    """
+            cur = self.db.cursor()
+            cur.execute(query, new_rsvp)
+            self.db.commit()
+            return new_rsvp
+        except (Exception, psycopg2.Error) as error:
+            print(error)
+
+
 def check_admin(current_user):
     try:
         cur = init_db().cursor()
@@ -107,3 +136,4 @@ def check_meetup(id):
         return details
     except (Exception, psycopg2.Error) as error:
         print(error)
+        

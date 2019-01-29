@@ -3,7 +3,7 @@ from flask import jsonify,request,abort,make_response
 
 #local imports
 from app.api.v2 import vers2 as v2
-from app.api.v2.models.meetup_model import Meetup,check_admin,check_meet,delete_meetup,all_meetups,check_meetup
+from app.api.v2.models.meetup_model import Meetup,check_admin,check_meet,delete_meetup,all_meetups,check_meetup,Rsvp
 from app.api.v2.models.auth_model import User
 from flask_jwt_extended import (
     JWTManager, jwt_required, create_access_token,
@@ -63,4 +63,23 @@ def each_meetups(id):
         abort(make_response(jsonify({"meetup":"meetup not found"}),200))
     abort(make_response(jsonify({"meetup":check_meetup(id)}),200))
 
+@v2.route('/meetups/<int:id>/rsvp', methods=['POST'])
+@jwt_required
+def rsvp_meetups(id):
 
+    current_user = get_jwt_identity()
+    user_data = request.get_json()
+    if check_meet(id) == True:
+        if not user_data:
+            abort(make_response(jsonify({"message":"Only Application/JSON input expected"}),400))
+        
+        # Check for empty inputs
+        if not all(field in user_data for field in ["response"]):
+            abort(make_response(jsonify({"message":"Please fill in a response"}),400))
+
+        response = user_data['response']
+        new_rsvp = Rsvp(id,current_user,response).add_rsvp()
+        abort(make_response(jsonify({"data":new_rsvp}),201))
+
+    abort(make_response(jsonify({"message":"Meetup not found"}),400))
+    
