@@ -61,7 +61,6 @@ def get_meetups():
 def each_meetups(id):
     if check_meetup(id) == False:
         abort(make_response(jsonify({"meetup":"meetup not found"}),200))
-    # return check_meetup(id)
     abort(make_response(jsonify({"meetup":check_meetup(id)}),200))
 
 
