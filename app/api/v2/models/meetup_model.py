@@ -92,3 +92,18 @@ def all_meetups():
         return  all_meetups
     except (Exception, psycopg2.Error) as error:
         print(error)
+        
+def check_meetup(id):
+    try:
+        cur = init_db().cursor()
+        query = "SELECT * FROM meetups WHERE id= %s";
+        cur.execute(query, (id,))
+        all_meetups = cur.fetchone()
+        cur.close()
+
+        details = (all_meetups)
+        if details == None:
+            return False
+        return details
+    except (Exception, psycopg2.Error) as error:
+        print(error)
