@@ -92,6 +92,7 @@ def all_meetups():
         return  all_meetups
     except (Exception, psycopg2.Error) as error:
         print(error)
+        
 def check_meetup(id):
     try:
         cur = init_db().cursor()
