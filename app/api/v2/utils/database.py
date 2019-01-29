@@ -13,10 +13,8 @@ def init_db():
         else:
             db_url = "dbname='testingdb' host='127.0.0.1' port='5432' user='postgres' password='12345'"
         conn = psycopg2.connect(db_url)
-        print('database connected')
         conn.commit()
-        return conn
-        conn.close()     
+        return conn    
     except (Exception, psycopg2.Error) as error:
         print("Unable to connect to the database", error)
      
@@ -58,13 +56,11 @@ def create_tables():
             cursor.execute(each_query)
         conn.commit()
         conn.close()
-        print("successfully created")
     except (Exception, psycopg2.Error) as error:
         print("Unable to create tables", error)
 
 
 def drop_all_tables():
-    config = "testingdb"
     connec = init_db()
     print("config")
     cursor = connec.cursor()
