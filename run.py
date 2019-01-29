@@ -12,7 +12,7 @@ from app import create_app
 config_name = os.getenv('APP_SETTINGS')
 app = create_app(config_name)
 SECRET_KEY = os.getenv("SECRET")
-app.config['JWT_SECRET_KEY'] = SECRET_KEY  # Change this!
+app.config['JWT_SECRET_KEY'] = SECRET_KEY  
 jwt = JWTManager(app)
 
 
