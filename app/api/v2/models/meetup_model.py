@@ -36,7 +36,7 @@ def check_admin(current_user):
     try:
         cur = init_db().cursor()
         # print(current_user)
-        query = "SELECT isAdmin FROM member WHERE username= %s";
+        query = "SELECT isAdmin FROM member WHERE username= %s"
         cur.execute(query, (current_user,))
         user_exists = cur.fetchone()
         cur.close()
@@ -53,7 +53,7 @@ def check_admin(current_user):
 def check_meet(id):
     try:
         cur = init_db().cursor()
-        query = "SELECT * FROM meetups WHERE id= %s";
+        query = "SELECT * FROM meetups WHERE id= %s"
         cur.execute(query, (id,))
         all_meetups = cur.fetchone()
         cur.close()
@@ -70,7 +70,7 @@ def delete_meetup(id):
     try:
         db= init_db()
         cur = db.cursor()
-        query = "DELETE FROM meetups WHERE id= %s ";
+        query = "DELETE FROM meetups WHERE id= %s "
         cur.execute(query, (id,))
         db.commit()
         return "deleted sucessfully"
@@ -82,7 +82,7 @@ def delete_meetup(id):
 def all_meetups():
     try:
         cur = init_db().cursor()
-        query = "SELECT * FROM meetups ";
+        query = "SELECT * FROM meetups "
         cur.execute(query, (id,))
         all_meetups = cur.fetchall()
         cur.close()
