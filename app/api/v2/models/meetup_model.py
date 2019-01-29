@@ -79,4 +79,16 @@ def delete_meetup(id):
         print(error)
 
     
- 
+def all_meetups():
+    try:
+        cur = init_db().cursor()
+        query = "SELECT * FROM meetups ";
+        cur.execute(query, (id,))
+        all_meetups = cur.fetchall()
+        cur.close()
+
+        if all_meetups == None:
+            return "not found"
+        return  all_meetups
+    except (Exception, psycopg2.Error) as error:
+        print(error)

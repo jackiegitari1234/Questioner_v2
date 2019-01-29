@@ -3,7 +3,7 @@ from flask import jsonify,request,abort,make_response
 
 #local imports
 from app.api.v2 import vers2 as v2
-from app.api.v2.models.meetup_model import Meetup,check_admin,check_meet,delete_meetup
+from app.api.v2.models.meetup_model import Meetup,check_admin,check_meet,delete_meetup,all_meetups
 from app.api.v2.models.auth_model import User
 from flask_jwt_extended import (
     JWTManager, jwt_required, create_access_token,
@@ -54,7 +54,7 @@ def delete_meetups(id):
     abort(make_response(jsonify({"message":"You are not authorised to add a meetup"}),403))
 
 @v2.route('/meetups', methods=['GET'])
-def get_meetups:
-    retun ("all")
+def get_meetups():
+    abort(make_response(jsonify({"meetups":all_meetups()}),200))
 
 
