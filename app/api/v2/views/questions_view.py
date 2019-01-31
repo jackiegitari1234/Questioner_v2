@@ -31,3 +31,17 @@ def add_question(id):
         abort(make_response(jsonify({"data":new_quiz}),201))
     abort(make_response(jsonify({"message":"Meetup not found"}),400))
 
+@v2.route('/questions/<int:id>/comment', methods=['POST'])
+def add_comment(id):
+        user_data = request.get_json()
+
+        if not user_data:
+            abort(make_response(jsonify({"message":"Only Application/JSON input expected"}),400))
+        
+        if not all(field in user_data for field in ["comment"]):
+            abort(make_response(jsonify({"message":"Please fill in a comment"}),400))
+
+        comment = user_data['comment']
+        username = get_jwt_identity()
+
+
