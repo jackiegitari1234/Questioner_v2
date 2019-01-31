@@ -71,7 +71,16 @@ def create_tables():
             votes VARCHAR (20) NOT NULL
         );
         """
-        all_queries = [member, meetup, rsvps, questions]
+        comment = """
+            CREATE TABLE IF NOT EXISTS comments(
+            id SERIAL PRIMARY KEY,
+            question_id VARCHAR (50) NOT NULL,
+            created_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+            created_by VARCHAR (20) NOT NULL,
+            body VARCHAR (20) NOT NULL
+        );
+        """
+        all_queries = [member, meetup, rsvps, questions, comment]
         for each_query in all_queries:
             cursor.execute(each_query)
         conn.commit()
