@@ -31,3 +31,30 @@ class Question(object):
             return new_quiz
         except (Exception, psycopg2.Error) as error:
             print(error)
+
+class Comment(object):
+
+    def __init__(self, *args):
+        self.quiz_id = args[0]
+        self.username = args[1]
+        self.comment = args[2]
+        self.db = init_db()
+
+    def add_comment (self):
+        new_comment = {
+            'quiz_id': self.quiz_id,
+            'username': self.username,
+            "comment": self.comment
+        }
+        try:
+            query = """
+                    INSERT INTO comments(question_id, created_by, body) 
+                    VALUES (%(quiz_id)s, %(username)s, %(comment)s
+                    ) ;
+                    """
+            cur = self.db.cursor()
+            cur.execute(query, new_comment)
+            self.db.commit()
+            return new_comment
+        except (Exception, psycopg2.Error) as error:
+            print(error)

@@ -94,6 +94,20 @@ def check_meet(id):
     except (Exception, psycopg2.Error) as error:
         print(error)
 
+def check_quiz(id):
+    try:
+        cur = init_db().cursor()
+        query = "SELECT * FROM questions WHERE id= %s"
+        cur.execute(query, (id,))
+        all_meetups = cur.fetchone()
+        cur.close()
+
+        details = (all_meetups[0])
+        if details == None:
+            return False
+        return True
+    except (Exception, psycopg2.Error) as error:
+        print(error)
 
 def delete_meetup(id):
     try:

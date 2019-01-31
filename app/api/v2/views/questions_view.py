@@ -1,7 +1,7 @@
 #downloaded modules
 from flask import jsonify,request,abort,make_response
-from app.api.v2.models.questions_model import Question
-from app.api.v2.models.meetup_model import check_meet
+from app.api.v2.models.questions_model import Question,Comment
+from app.api.v2.models.meetup_model import check_meet,check_quiz
 
 #local imports
 from app.api.v2 import vers2 as v2
@@ -32,7 +32,9 @@ def add_question(id):
     abort(make_response(jsonify({"message":"Meetup not found"}),400))
 
 @v2.route('/questions/<int:id>/comment', methods=['POST'])
+@jwt_required
 def add_comment(id):
+    if check_quiz(id) == True:
         user_data = request.get_json()
 
         if not user_data:
@@ -43,5 +45,9 @@ def add_comment(id):
 
         comment = user_data['comment']
         username = get_jwt_identity()
+        new_comment = Comment(id,username,comment).add_comment()
+        abort(make_response(jsonify({"data":new_comment}),201))
+
+    abort(make_response(jsonify({"message":"Question not found"}),400))
 
 
