@@ -1,6 +1,6 @@
 #downloaded modules
 from flask import jsonify,request,abort,make_response
-from app.api.v2.models.questions_model import Question,Comment
+from app.api.v2.models.questions_model import Question,Comment,Votes,check_voter
 from app.api.v2.models.meetup_model import check_meet,check_quiz
 
 #local imports
@@ -50,4 +50,18 @@ def add_comment(id):
 
     abort(make_response(jsonify({"message":"Question not found"}),400))
 
+@v2.route('/questions/<id>/upvote', methods=['PATCH'])
+# @jwt_required
+def upvote_question(id):
+    if check_quiz(id) == True:
+
+        # username = get_jwt_identity()
+        username = "jackline"
+        voter = check_voter(username,id)
+        if not voter:
+            return 'not voted'
+        return 'voted' 
+        
+
+    abort(make_response(jsonify({"message":"Question not found"}),400))
 

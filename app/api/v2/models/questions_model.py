@@ -58,3 +58,64 @@ class Comment(object):
             return new_comment
         except (Exception, psycopg2.Error) as error:
             print(error)
+
+class Votes(object):
+
+    def __init__(self, *args):
+        self.quiz_id = args[0]
+        self.username = args[1]
+        self.db = init_db()
+
+    def add_vote(self):
+        quiz_id = self.quiz_id
+        new_votes = {
+            'quiz_id': self.quiz_id,
+            'username': self.username
+        }
+        try:
+            query = """
+                    INSERT INTO votes(question_id, created_by, status) 
+                    VALUES (%(quiz_id)s, %(username)s, 'upvote'
+                    ) ;
+                    """
+            cur = self.db.cursor()
+            cur.execute(query, new_votes)
+            self.db.commit()
+            return new_votes
+
+            query = "SELECT votes FROM questions WHERE id= %s"
+            cur = self.db.cursor()
+            cur.execute(query, (quiz_id,))
+            user_exists = cur.fetchone()
+            cur.close()
+
+            details = (user_exists[0])
+            total = (int(details) + 1)
+
+            query1 = """
+                    UPDATE questions SET votes = %s WHERE id = %s
+                    ;
+                    """
+
+            cur = self.db.cursor()
+            cur.execute(query1, (total,quiz_id,))
+            self.db.commit()
+            return new_votes
+        except (Exception, psycopg2.Error) as error:
+            print(error)
+
+def check_voter(username,id):
+    try:
+        cur = init_db().cursor()
+        query = "SELECT * FROM votes WHERE question_id = %s AND created_by= %s AND status= 'upvote'"
+        cur.execute(query, (id,username,))
+        user_exists = cur.fetchone()
+        cur.close()
+
+        details = (user_exists[0])
+        print (details)
+        if details:
+            return True
+        return False
+    except (Exception, psycopg2.Error) as error:
+        print(error)
