@@ -9,9 +9,9 @@ config = os.getenv("FLASK_ENV")
 def init_db():
     try:
         if config == "development":
-            db_url = "dbname='postgres' host='127.0.0.1' port='5433' user='postgres' password='12345'"
+            db_url = "dbname='postgres' host='127.0.0.1' port='5432' user='postgres' password='12345'"
         else:
-            db_url = "dbname='testingdb' host='127.0.0.1' port='5433' user='postgres' password='12345'"
+            db_url = "dbname='testingdb' host='127.0.0.1' port='5432' user='postgres' password='12345'"
         conn = psycopg2.connect(db_url)
         conn.commit()
         return conn    
