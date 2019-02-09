@@ -51,20 +51,34 @@ def add_comment(id):
     abort(make_response(jsonify({"message":"Question not found"}),400))
 
 @v2.route('/questions/<id>/upvote', methods=['PATCH'])
-# @jwt_required
+@jwt_required
 def upvote_question(id):
     if check_quiz(id) == True:
 
         # username = get_jwt_identity()
-        username = "jackline"
-        voter = check_voter(id,username)
+        username = 'jackied'
+        voter = check_voter(id,username,'upvote')
         if voter:
             return 'user already upvoted'
-        if Votes(username,id).add_vote():
+        if Votes(username,id,'upvote','1').add_vote():
             return 'sucessful'
         return 'failed'
         
-        # return 'voted' 
+
+    abort(make_response(jsonify({"message":"Question not found"}),400))
+
+@v2.route('/questions/<id>/downvote', methods=['PATCH'])
+@jwt_required
+def downvote_question(id):
+    if check_quiz(id) == True:
+
+        username = get_jwt_identity()
+        voter = check_voter(id,username,'downvote')
+        if voter:
+            return 'user already downvoted'
+        if Votes(username,id,'downvote','-1').add_vote():
+            return 'successful'
+        return 'failed'
         
 
     abort(make_response(jsonify({"message":"Question not found"}),400))

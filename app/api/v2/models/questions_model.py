@@ -64,8 +64,9 @@ class Votes(object):
     def __init__(self, *args):
         self.username = args[0]
         self.quiz_id = args[1]
+        self.upvote = args[2]
+        self.value = args[3]
         self.db = init_db()
-        self.upvote = 'upvote'
 
     def add_vote(self):
         quiz_id = self.quiz_id
@@ -94,7 +95,7 @@ class Votes(object):
             cur.close()
 
             details = (user_exists[0])
-            total = (int(details) + 1)
+            total = (int(details) + int(self.value))
 
             query1 = """
                     UPDATE questions SET votes = %s WHERE id = %s
@@ -108,11 +109,11 @@ class Votes(object):
         except (Exception, psycopg2.Error) as error:
             print(error)
 
-def check_voter(id,username):
+def check_voter(id,username,vote):
     try:
         cur = init_db().cursor()
-        query = "SELECT id FROM votes WHERE question_id = %s AND created_by= %s AND status= 'upvote'"
-        cur.execute(query, (id,username,))
+        query = "SELECT id FROM votes WHERE question_id = %s AND created_by= %s AND status= %s"
+        cur.execute(query, (id,username,vote))
         user_exists = cur.fetchone()
         cur.close()
 
