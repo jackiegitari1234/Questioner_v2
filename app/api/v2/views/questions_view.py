@@ -57,10 +57,14 @@ def upvote_question(id):
 
         # username = get_jwt_identity()
         username = "jackline"
-        voter = check_voter(username,id)
-        if not voter:
-            return 'not voted'
-        return 'voted' 
+        voter = check_voter(id,username)
+        if voter:
+            return 'user already upvoted'
+        if Votes(username,id).add_vote():
+            return 'sucessful'
+        return 'failed'
+        
+        # return 'voted' 
         
 
     abort(make_response(jsonify({"message":"Question not found"}),400))
