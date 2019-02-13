@@ -8,15 +8,13 @@ from app.api.v2.utils.database import init_db, create_tables, drop_all_tables
 import Instance
 from Instance.config import app_config
 
-app = create_app(config="testing")
 
 
 class BaseTest(unittest.TestCase):
     '''test configurations'''
 
     def setUp(self):
-        self.client = create_app(config="testing").test_client()
-        config = os.getenv("TESTING_ENV")
+        self.client = create_app().test_client()
         init_db()
         create_tables()
 

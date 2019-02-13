@@ -9,11 +9,13 @@ config = os.getenv("FLASK_ENV")
 def init_db():
     try:
         if config == "development":
-            db_url = "dbname='postgres' host='127.0.0.1' port='5432' user='postgres' password='12345'"
+            db_url = os.getenv("DATABASE_URL")
         else:
+            # db_url = os.getenv("TEST_DATABASE_URL")
             db_url = "dbname='testingdb' host='127.0.0.1' port='5432' user='postgres' password='12345'"
         conn = psycopg2.connect(db_url)
         conn.commit()
+        print (config)
         return conn    
     except (Exception, psycopg2.Error) as error:
         print("Unable to connect to the database", error)

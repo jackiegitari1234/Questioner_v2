@@ -26,7 +26,7 @@ def add_meetup():
             abort(make_response(jsonify({"message":"Only Application/JSON input expected"}),400))
         
         # Check for empty inputs
-        if not all(field in user_data for field in ["topic", "location", "happeningOn","tags"]):
+        if not all(field in user_data for field in ["topic", "location", "happeningOn","tags","image"]):
             abort(make_response(jsonify({"message":"Please fill in all the required input fields"}),400))
 
         topic = user_data['topic']
