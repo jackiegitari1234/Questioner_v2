@@ -12,7 +12,7 @@ def init_db():
             db_url = os.getenv("DATABASE_URL")
         else:
             # db_url = os.getenv("TEST_DATABASE_URL")
-            db_url = "dbname='testingdb' host='127.0.0.1' port='5433' user='postgres' password='12345'"
+            db_url = "dbname='testingdb' host='127.0.0.1' port='5432' user='postgres' password='12345'"
         conn = psycopg2.connect(db_url)
         conn.commit()
         print (config)
