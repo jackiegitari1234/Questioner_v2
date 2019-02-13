@@ -1,23 +1,18 @@
 # global builtin modules
 import unittest
-import Instance
 import json
 
 # local imports
 import os
-from app import create_app
-from .base_test import BaseTest
+from app.tests.v2.base_test import BaseTest
 from app.api.v2.utils.database import init_db, create_tables
 
-# app = create_app("testing")
 
 
 class TestAuth(BaseTest):
 
     '''SIGN UP'''
 
-    # test json data
-    config = os.getenv("TESTING_ENV")
 
     init_db()
     create_tables()
@@ -58,9 +53,6 @@ class TestAuth(BaseTest):
 
     # Test register with invalid email
     def test_signup_valid_details(self):
-        # config = "testing"
-        # init_db()
-        # create_tables()
         response = self.client.post(
             'api/v2/signup', data=json.dumps(self.new_user),
             content_type="application/json")
